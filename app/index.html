@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>My menu</title>
+</head>
+<style>
+    .highlight {
+        background: gainsboro;
+    }
+</style>
+
+<body ng-app="RecipeManagement">
+    <!-- <div class="container">
+    <ul class="nav nav-tabs">
+      <li ng-class="($root.selectedTab=='Recipes') ? 'highlight' : 'none'"><a ng-href="#/recipe" ng-click="selectTab('Recipes')">Recipes</a></li>
+      <li ng-class="($root.selectedTab=='Shopping List') ? 'highlight' : 'none'"><a ng-href="#/shopping" ng-click="selectTab('Shopping List')">Shopping List</a></li>
+    </ul>
+  </div>  -->
+    <ng-view></ng-view>
+    <script src="bower_components/angular/angular.js"></script>
+    <script src="bower_components/angular-route/angular-route.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/services.js"></script>
+    <script src="js/controllers.js"></script>
+</body>
+
+</html>

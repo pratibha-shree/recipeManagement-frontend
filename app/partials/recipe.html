@@ -1,0 +1,133 @@
+<style>
+    .imgThumbnail {
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        padding: 5px;
+        width: 100px;
+    }
+    
+    .selectedImg {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        width: 50%;
+    }
+    
+    .highlight {
+        background: gainsboro;
+    }
+    
+    .selected {
+        background-color: royalblue !important;
+        color: white;
+    }
+</style>
+
+
+
+<div class="container">
+
+    <ul class="nav nav-tabs">
+        <li ng-class="(selectedTab=='Recipe') ? 'highlight' : 'none'"><a ng-click="selectTab('Recipe')">Recipe</a></li>
+        <li ng-class="(selectedTab=='Shopping List') ? 'highlight' : 'none'"><a ng-click="selectTab('Shopping List')">Shopping List</a></li>
+    </ul>
+    <br/>
+
+    <div ng-if="selectedTab=='Recipe'">
+        <div class="row">
+            <div class="col-md-6">
+                <button type="button" class="btn btn-primary" ng-click="showCreateRecipe()">New Recipe</button>
+            </div>
+            <div class="col-md-6" ng-if="!showRecipe">
+                <h2>Please select a Recipe!</h2>
+            </div>
+        </div>
+        <br/>
+        <div class="row">
+            <div class="col-md-6">
+                <div ng-repeat="recipe in recipeList">
+                    <div class="panel panel-default" ng-click="ShowRecipeDetails(recipe.id)" ng-class="(recipe.id==selectedRecipe.id) ? 'selected' : 'none'">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h2>{{recipe.name | uppercase}}</h2>
+                                <h4>{{recipe.description}}</h4>
+                            </div>
+                            <div class="col-md-6">
+                                <img ng-src="{{recipe.imageUrl}}" class="imgThumbnail"></img>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6" ng-if="showRecipe">
+                <div class="panel panel-primary">
+                    <div>
+                        <img class="selectedImg" ng-src="{{selectedRecipe.imageUrl}} "></img>
+                    </div>
+                    <div>
+                        <h2>{{selectedRecipe.name | uppercase}}</h2>
+                    </div>
+                    <div>{{selectedRecipe.description}}</div>
+                    <div ng-repeat="recipeIngredient in selectedRecipe.ingredients ">
+                        {{recipeIngredient.ingredient.name}} - {{recipeIngredient.amount}}
+                    </div>
+                </div>
+                <button type="button " class="btn btn-danger " ng-click="deleteRecipe(selectedRecipe.id) ">Delete</button>
+            </div>
+            <div class="col-md-6 " ng-if="showNewRecipe ">
+                <div ng-if="isInvalid ">
+                    <div ng-repeat="message in errorMessage ">
+                        <div style="color: red; ">{{message}}</div>
+                    </div>
+                </div>
+                <br/> <br/>Name:
+                <p><input type="text " ng-model="newRecipe.name "></input>
+                </p>
+                Image Url:
+                <p><input type="text " ng-model="newRecipe.imageUrl "></input>
+                </p>
+                Description:
+                <p> <input type="text " ng-model="newRecipe.description "></input>
+                </p>
+
+                <button type="button " class="btn btn-success " ng-click="saveRecipe() ">Save</button>
+                <button type="button " class="btn btn-danger " ng-click="cancelRecipe() ">Cancel</button>
+
+            </div>
+
+        </div>
+    </div>
+    <div ng-if="selectedTab=='Shopping List' ">
+        <br>
+        <button type="button " class="btn btn-primary " ng-click="showAddNewIngredient() ">New Ingredient</button>
+        <br/>
+        <br/>
+        <div ng-if="showNewIngredient ">
+            <div ng-if="isIngredientInvalid ">
+                <div style="color: red; ">{{message}}</div>
+            </div>
+            Name:
+            <p> <input type="text " ng-model="newIngredient.name "></input>
+            </p>
+
+            <button type="button " class="btn btn-success " ng-click="saveIngredient() ">Add Ingredient</button>
+            <button type="button " class="btn btn-danger " ng-click="cancelIngredient() ">Cancel</button><br/>
+        </div>
+        <br/>
+        <div ng-if="editIngredient">
+            <p> <input type="text " ng-model="selectedIngredient.name"></input>
+            </p>
+            <button type="button " class="btn btn-success " ng-click="updateIngredient() ">Update</button>
+            <button type="button " class="btn btn-danger " ng-click="deleteIngredient(selectedIngredient.id) ">Delete</button>
+            <button type="button " class="btn btn-warning " ng-click="clearIngredient() ">Cancel</button>
+        </div>
+        <div ng-repeat="ingredient in ingredientList ">
+
+            <div class="panel panel-default" ng-click="showIngredientDetails(ingredient.id)">
+                <h4>{{ingredient.name | uppercase}}</h4>
+            </div>
+        </div>
+
+    </div>
+</div>
+</div>
